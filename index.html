@@ -30,38 +30,85 @@
     </script>
 
     <style>
-        /* 印刷時の設定 */
-        @media print {
-            body {
-                background: none;
-                -webkit-print-color-adjust: exact;
-            }
-            .slide-container {
-                margin: 0;
-                box-shadow: none;
-                page-break-after: always;
-                break-after: page;
-                border: 1px solid #ddd;
-            }
-            /* 印刷時に最後のページ後の空白を防ぐ */
-            .slide-container:last-child {
-                page-break-after: auto;
-            }
-        }
-
-        /* 画面表示時の微調整 */
+        /* 画面表示時の設定 */
         body {
             background-color: #f1f5f9; /* Slate-100 */
         }
-        
         .slide-aspect {
             aspect-ratio: 16 / 9;
         }
+
+        /* =========================================
+           印刷（PDF化）時の設定
+        ========================================= */
+        @media print {
+            /* 印刷時の余白をリセット */
+            @page {
+                margin: 0;
+                size: auto; /* または landscape */
+            }
+
+            html, body {
+                height: 100%;
+                margin: 0 !important;
+                padding: 0 !important;
+                background: none;
+                display: block !important; /* flexを解除 */
+            }
+
+            /* 画面表示用の隙間を解除 */
+            body.gap-10 {
+                gap: 0 !important;
+            }
+
+            /* スライドコンテナの印刷時スタイル */
+            .slide-container {
+                width: 100% !important;
+                max-width: none !important; /* 画面用の幅制限を解除 */
+                height: auto !important; /* 高さはアスペクト比に任せる */
+                aspect-ratio: 16 / 9 !important; /* アスペクト比を強制 */
+                
+                margin: 0 !important;
+                padding: 0 !important; /* 内部の余白は維持しつつ外側をゼロに */
+                box-shadow: none !important;
+                border: none !important;
+                border-radius: 0 !important;
+                
+                /* 改ページ設定 */
+                page-break-after: always;
+                break-after: page;
+                /* スライド途中での分割を禁止 */
+                page-break-inside: avoid;
+                break-inside: avoid;
+
+                /* ページ内での配置調整 */
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center; /* コンテンツを垂直中央寄せ */
+            }
+
+            /* 最後のスライドの後の空白ページを防ぐ */
+            .slide-container:last-child {
+                page-break-after: auto;
+                break-after: auto;
+            }
+
+            /* 背景色や画像を強制的に印刷する */
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            
+            /* 印刷時にスライド内部の余白を少し調整してフィット感を高める */
+            .slide-container.p-12 {
+                padding: 2.5rem !important; /* p-10相当に少し縮小 */
+            }
+        }
     </style>
 </head>
-<body class="font-sans text-slate-700 antialiased py-10 flex flex-col items-center gap-10">
+<body class="font-sans text-slate-700 antialiased py-10 flex flex-col items-center gap-10 print:py-0 print:gap-0">
 
-    <div class="slide-container slide-aspect w-full max-w-5xl bg-white shadow-2xl rounded-xl overflow-hidden relative flex flex-col justify-between p-0 print:rounded-none">
+    <div class="slide-container slide-aspect w-full max-w-5xl bg-white shadow-2xl rounded-xl overflow-hidden relative flex flex-col justify-between p-0">
         
         <div class="absolute top-0 left-0 w-4 h-full bg-gold"></div>
 
@@ -105,7 +152,7 @@
         </div>
     </div>
 
-    <div class="slide-container slide-aspect w-full max-w-5xl bg-white shadow-2xl rounded-xl overflow-hidden relative p-12 print:rounded-none flex flex-col">
+    <div class="slide-container slide-aspect w-full max-w-5xl bg-white shadow-2xl rounded-xl overflow-hidden relative p-12 flex flex-col">
         
         <div class="mb-10 text-center">
             <h2 class="text-3xl font-bold text-navy inline-block border-b-2 border-gold pb-2">
@@ -178,7 +225,7 @@
         </div>
     </div>
 
-    <div class="slide-container slide-aspect w-full max-w-5xl bg-white shadow-2xl rounded-xl overflow-hidden relative p-12 print:rounded-none flex flex-col">
+    <div class="slide-container slide-aspect w-full max-w-5xl bg-white shadow-2xl rounded-xl overflow-hidden relative p-12 flex flex-col">
         
         <div class="mb-12">
             <p class="text-gold font-bold tracking-widest uppercase text-sm mb-2">WHY CHOOSE US</p>
@@ -232,72 +279,72 @@
         </div>
     </div>
 
-    <div class="slide-container slide-aspect w-full max-w-5xl bg-navy text-white shadow-2xl rounded-xl overflow-hidden relative p-12 print:rounded-none flex flex-col">
+    <div class="slide-container slide-aspect w-full max-w-5xl bg-navy text-white shadow-2xl rounded-xl overflow-hidden relative p-10 flex flex-col">
         
-        <div class="text-center mb-10">
+        <div class="text-center mb-6">
             <h2 class="text-3xl font-bold">
                 貴社のリスク・手間<span class="text-gold">「ゼロ」</span>の提携モデル
             </h2>
         </div>
 
-        <div class="bg-white/5 rounded-xl p-6 mb-8 border border-white/10">
+        <div class="bg-white/5 rounded-xl p-5 mb-6 border border-white/10">
             <div class="flex items-center justify-between text-center relative">
                 <div class="flex-1">
-                    <div class="text-4xl text-slate-400 mb-2"><i class="fa-solid fa-envelope-open-text"></i></div>
+                    <div class="text-3xl text-slate-400 mb-2"><i class="fa-solid fa-envelope-open-text"></i></div>
                     <h4 class="font-bold text-gold text-lg">貴社</h4>
                     <p class="text-sm text-slate-300 mt-1">生徒様へチラシ/URLをご案内</p>
                     <p class="text-xs text-slate-400">（送付のみでOK）</p>
                 </div>
                 
-                <div class="text-slate-500 text-2xl"><i class="fa-solid fa-chevron-right"></i></div>
+                <div class="text-slate-500 text-xl"><i class="fa-solid fa-chevron-right"></i></div>
 
                 <div class="flex-1">
-                    <div class="text-4xl text-white mb-2"><i class="fa-solid fa-chalkboard-user"></i></div>
+                    <div class="text-3xl text-white mb-2"><i class="fa-solid fa-chalkboard-user"></i></div>
                     <h4 class="font-bold text-white text-lg">Ark College</h4>
                     <p class="text-sm text-slate-300 mt-1">無料相談・入塾・指導</p>
                     <p class="text-xs text-slate-400">（全て弊社が対応）</p>
                 </div>
 
-                <div class="text-slate-500 text-2xl"><i class="fa-solid fa-chevron-right"></i></div>
+                <div class="text-slate-500 text-xl"><i class="fa-solid fa-chevron-right"></i></div>
 
                 <div class="flex-1">
-                    <div class="text-4xl text-gold mb-2"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                    <div class="text-3xl text-gold mb-2"><i class="fa-solid fa-hand-holding-dollar"></i></div>
                     <h4 class="font-bold text-gold text-lg">成果・報酬</h4>
                     <p class="text-sm text-slate-300 mt-1">入塾決定で貴社へ報酬をお支払い</p>
                 </div>
             </div>
         </div>
 
-        <div class="grid grid-cols-3 gap-6 mb-8">
-            <div class="bg-white text-navy p-5 rounded-lg text-center shadow-lg">
+        <div class="grid grid-cols-3 gap-5 mb-6 flex-1 items-start">
+            <div class="bg-white text-navy p-4 rounded-lg text-center shadow-lg">
                 <span class="bg-navy text-gold text-xs font-bold px-2 py-1 rounded mb-2 inline-block">Benefit 1</span>
-                <h3 class="font-bold text-xl mb-1">紹介手数料</h3>
-                <p class="text-sm font-medium">売上の <span class="text-2xl font-bold text-gold">10%</span> をお支払い</p>
-                <p class="text-xs text-slate-500 mt-2 text-left leading-tight">※継続的な収益源としてご活用いただけます。</p>
+                <h3 class="font-bold text-lg mb-1">紹介手数料</h3>
+                <p class="text-sm font-medium">売上の <span class="text-xl font-bold text-gold">10%</span> をお支払い</p>
+                <p class="text-xs text-slate-500 mt-1 text-left leading-tight">※継続的な収益源としてご活用いただけます。</p>
             </div>
             
-            <div class="bg-white text-navy p-5 rounded-lg text-center shadow-lg border-2 border-gold transform scale-105 z-10">
+            <div class="bg-white text-navy p-4 rounded-lg text-center shadow-lg border-2 border-gold transform scale-105 z-10">
                 <span class="bg-gold text-navy text-xs font-bold px-2 py-1 rounded mb-2 inline-block">Benefit 2</span>
-                <h3 class="font-bold text-xl mb-1">生徒様特典</h3>
-                <p class="text-sm font-medium">貴社経由なら<br>入塾金 <span class="text-xl font-bold text-red-600 line-through">55,000円</span> ➡ <span class="text-2xl font-bold text-gold">無料</span></p>
-                <p class="text-xs text-slate-500 mt-2 text-left leading-tight">※強力なフックになります。</p>
+                <h3 class="font-bold text-lg mb-1">生徒様特典</h3>
+                <p class="text-sm font-medium">貴社経由なら<br>入塾金 <span class="text-lg font-bold text-red-600 line-through">55,000円</span> ➡ <span class="text-xl font-bold text-gold">無料</span></p>
+                <p class="text-xs text-slate-500 mt-1 text-left leading-tight">※強力なフックになります。</p>
             </div>
 
-            <div class="bg-white text-navy p-5 rounded-lg text-center shadow-lg">
+            <div class="bg-white text-navy p-4 rounded-lg text-center shadow-lg">
                 <span class="bg-navy text-gold text-xs font-bold px-2 py-1 rounded mb-2 inline-block">Benefit 3</span>
-                <h3 class="font-bold text-xl mb-1">コンテンツ提供</h3>
+                <h3 class="font-bold text-lg mb-1">コンテンツ提供</h3>
                 <p class="text-sm font-medium">貴社セミナー等へ<br><span class="font-bold text-gold">無料登壇・情報提供</span></p>
-                <p class="text-xs text-slate-500 mt-2 text-left leading-tight">※「受験のプロ」として貴社のイベントを盛り上げます。</p>
+                <p class="text-xs text-slate-500 mt-1 text-left leading-tight">※「受験のプロ」としてイベントを盛り上げます。</p>
             </div>
         </div>
 
-        <div class="mt-auto text-center border-t border-white/20 pt-6">
-            <p class="mb-4 text-slate-300 font-medium">まずは詳細について、オンラインで15分ほどご説明させていただけませんか？</p>
-            <a href="https://www.ark-college.com/" target="_blank" class="inline-flex items-center gap-2 bg-gold hover:bg-goldlight text-navy font-bold py-3 px-10 rounded-full transition-colors shadow-lg hover:shadow-xl text-lg">
+        <div class="mt-auto text-center border-t border-white/20 pt-4">
+            <p class="mb-3 text-slate-300 font-medium text-sm">まずは詳細について、オンラインで15分ほどご説明させていただけませんか？</p>
+            <a href="https://www.ark-college.com/" target="_blank" class="inline-flex items-center gap-2 bg-gold hover:bg-goldlight text-navy font-bold py-2 px-8 rounded-full transition-colors shadow-lg hover:shadow-xl text-base">
                 <span>お問い合わせ・詳細はこちら</span>
                 <i class="fa-solid fa-arrow-up-right-from-square"></i>
             </a>
-            <p class="text-xs text-slate-400 mt-4">Ark College (アークカレッジ) | URL: https://www.ark-college.com/</p>
+            <p class="text-xs text-slate-400 mt-3">Ark College (アークカレッジ) | URL: https://www.ark-college.com/</p>
         </div>
     </div>
 
