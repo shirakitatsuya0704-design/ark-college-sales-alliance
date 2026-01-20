@@ -17,8 +17,8 @@
             theme: {
                 extend: {
                     colors: {
-                        navy: '#0f172a', // Main Color
-                        gold: '#c5a059', // Accent Color
+                        navy: '#0f172a',
+                        gold: '#c5a059',
                         goldlight: '#e6c88a',
                     },
                     fontFamily: {
@@ -30,46 +30,54 @@
     </script>
 
     <style>
-        /* 画面表示時の設定 */
+        /* =========================================
+           画面表示時のスタイル (プレビュー用)
+        ========================================= */
         body {
-            background-color: #f1f5f9; /* Slate-100 */
+            background-color: #f1f5f9; /* 背景色あり */
         }
         .slide-aspect {
-            aspect-ratio: 16 / 9;
+            aspect-ratio: 16 / 9; /* 画面では16:9で見せる */
         }
 
         /* =========================================
-           印刷（PDF化）時の設定
+           印刷・PDF化時のスタイル (A4横 完全対応)
         ========================================= */
         @media print {
-            /* 印刷時の余白をリセット */
             @page {
-                margin: 0;
-                size: auto; /* または landscape */
+                size: A4 landscape; /* A4 横向き */
+                margin: 0;          /* 余白なし */
             }
 
             html, body {
-                height: 100%;
                 margin: 0 !important;
                 padding: 0 !important;
-                background: none;
-                display: block !important; /* flexを解除 */
+                width: 297mm;  /* A4 幅 */
+                height: 210mm; /* A4 高さ */
+                background: none !important;
+                display: block !important;
+                overflow: visible !important;
             }
 
-            /* 画面表示用の隙間を解除 */
+            /* 画面用の隙間を削除 */
             body.gap-10 {
                 gap: 0 !important;
             }
+            body.py-10 {
+                padding-top: 0 !important;
+                padding-bottom: 0 !important;
+            }
 
-            /* スライドコンテナの印刷時スタイル */
+            /* スライドコンテナの強制サイズ指定 */
             .slide-container {
-                width: 100% !important;
-                max-width: none !important; /* 画面用の幅制限を解除 */
-                height: auto !important; /* 高さはアスペクト比に任せる */
-                aspect-ratio: 16 / 9 !important; /* アスペクト比を強制 */
+                width: 297mm !important;
+                height: 209mm !important; /* 1mmの余裕を持たせて空白ページ混入を防ぐ */
+                max-width: none !important;
+                aspect-ratio: auto !important; /* 16:9制限を解除してA4に合わせる */
                 
                 margin: 0 !important;
-                padding: 0 !important; /* 内部の余白は維持しつつ外側をゼロに */
+                padding: 15mm !important; /* コンテンツ内側の余白 */
+                
                 box-shadow: none !important;
                 border: none !important;
                 border-radius: 0 !important;
@@ -77,42 +85,44 @@
                 /* 改ページ設定 */
                 page-break-after: always;
                 break-after: page;
-                /* スライド途中での分割を禁止 */
                 page-break-inside: avoid;
-                break-inside: avoid;
-
-                /* ページ内での配置調整 */
+                
+                /* レイアウト維持 */
                 display: flex !important;
                 flex-direction: column !important;
-                justify-content: center; /* コンテンツを垂直中央寄せ */
+                justify-content: space-between !important;
             }
 
-            /* 最後のスライドの後の空白ページを防ぐ */
+            /* 最後のページの後の空白ページ防止 */
             .slide-container:last-child {
                 page-break-after: auto;
                 break-after: auto;
+                height: 209mm !important;
             }
 
-            /* 背景色や画像を強制的に印刷する */
+            /* 背景色強制 */
             * {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
-            
-            /* 印刷時にスライド内部の余白を少し調整してフィット感を高める */
-            .slide-container.p-12 {
-                padding: 2.5rem !important; /* p-10相当に少し縮小 */
+
+            /* 4枚目（コンテンツが多い）の微調整 */
+            .slide-4-content {
+                gap: 10px !important; /* 隙間を少し詰める */
+            }
+            .slide-4-footer {
+                padding-top: 10px !important;
             }
         }
     </style>
 </head>
-<body class="font-sans text-slate-700 antialiased py-10 flex flex-col items-center gap-10 print:py-0 print:gap-0">
+<body class="font-sans text-slate-700 antialiased py-10 flex flex-col items-center gap-10">
 
     <div class="slide-container slide-aspect w-full max-w-5xl bg-white shadow-2xl rounded-xl overflow-hidden relative flex flex-col justify-between p-0">
         
         <div class="absolute top-0 left-0 w-4 h-full bg-gold"></div>
 
-        <div class="flex flex-col justify-center h-full px-20 relative z-10">
+        <div class="flex flex-col justify-center h-full px-20 relative z-10 print:px-10">
             <div class="inline-block mb-6">
                 <span class="bg-navy text-white px-4 py-1 text-sm font-bold tracking-wider rounded-sm">
                     PARTNERSHIP PROPOSAL
@@ -140,7 +150,7 @@
             </div>
         </div>
 
-        <div class="bg-navy w-full py-6 px-20 text-center">
+        <div class="bg-navy w-full py-6 px-20 text-center print:py-4">
             <p class="text-white text-lg font-bold tracking-wide">
                 <i class="fa-solid fa-check-circle text-gold mr-2"></i>
                 【費用負担ゼロ・実働負担ほぼゼロ】で貴社の顧客満足度を高めるスキーム
@@ -154,23 +164,23 @@
 
     <div class="slide-container slide-aspect w-full max-w-5xl bg-white shadow-2xl rounded-xl overflow-hidden relative p-12 flex flex-col">
         
-        <div class="mb-10 text-center">
+        <div class="mb-8 text-center print:mb-4">
             <h2 class="text-3xl font-bold text-navy inline-block border-b-2 border-gold pb-2">
                 留学生と保護者様が抱える「帰国後の不安」を解消
             </h2>
         </div>
 
-        <div class="flex-1 grid grid-cols-2 gap-8 h-full">
+        <div class="flex-1 grid grid-cols-2 gap-8 h-full print:gap-6">
             
-            <div class="bg-slate-100 rounded-xl p-8 flex flex-col relative border-t-4 border-slate-400">
-                <div class="flex items-center gap-3 mb-6">
+            <div class="bg-slate-100 rounded-xl p-8 flex flex-col relative border-t-4 border-slate-400 print:p-6">
+                <div class="flex items-center gap-3 mb-6 print:mb-4">
                     <div class="w-10 h-10 rounded-full bg-slate-400 text-white flex items-center justify-center text-xl">
                         <i class="fa-solid fa-triangle-exclamation"></i>
                     </div>
                     <h3 class="text-xl font-bold text-slate-600">貴社生徒様の課題</h3>
                 </div>
                 
-                <ul class="space-y-6 flex-1">
+                <ul class="space-y-6 flex-1 print:space-y-4">
                     <li class="flex items-start gap-3">
                         <i class="fa-solid fa-xmark text-red-500 mt-1"></i>
                         <span class="font-medium text-slate-600">英語力は高いが、<br><span class="font-bold text-slate-800">日本の大学入試（志望理由書・小論文）</span>の<br>準備が手付かず</span>
@@ -184,7 +194,7 @@
                         <span class="font-medium text-slate-600">保護者様からの専門的な進路相談に<span class="font-bold text-slate-800"><br>対応しきれない</span></span>
                     </li>
                 </ul>
-                <div class="mt-auto text-center">
+                <div class="mt-auto text-center pt-4">
                     <p class="text-sm text-slate-400">帰国後の進路が見えないことによる<br>「留学中のモチベーション低下」の懸念も...</p>
                 </div>
             </div>
@@ -195,15 +205,15 @@
                 </div>
             </div>
 
-            <div class="bg-navy rounded-xl p-8 flex flex-col relative border-t-4 border-gold shadow-lg">
-                <div class="flex items-center gap-3 mb-6">
+            <div class="bg-navy rounded-xl p-8 flex flex-col relative border-t-4 border-gold shadow-lg print:p-6">
+                <div class="flex items-center gap-3 mb-6 print:mb-4">
                     <div class="w-10 h-10 rounded-full bg-gold text-navy flex items-center justify-center text-xl">
                         <i class="fa-solid fa-lightbulb"></i>
                     </div>
                     <h3 class="text-xl font-bold text-white">Ark Collegeによる解決</h3>
                 </div>
 
-                <ul class="space-y-6 flex-1">
+                <ul class="space-y-6 flex-1 print:space-y-4">
                     <li class="flex items-start gap-3">
                         <i class="fa-solid fa-circle-check text-gold mt-1"></i>
                         <span class="font-medium text-slate-100">「帰国生入試・総合型選抜」専門プロが<br><span class="font-bold text-gold border-b border-gold/50">合格戦略を立案</span></span>
@@ -227,7 +237,7 @@
 
     <div class="slide-container slide-aspect w-full max-w-5xl bg-white shadow-2xl rounded-xl overflow-hidden relative p-12 flex flex-col">
         
-        <div class="mb-12">
+        <div class="mb-10 print:mb-6">
             <p class="text-gold font-bold tracking-widest uppercase text-sm mb-2">WHY CHOOSE US</p>
             <h2 class="text-4xl font-black text-navy">
                 早慶上智・国公立へ。<br>
@@ -235,10 +245,10 @@
             </h2>
         </div>
 
-        <div class="grid grid-cols-3 gap-6 h-full">
+        <div class="grid grid-cols-3 gap-6 h-full print:gap-4">
             
             <div class="border border-slate-200 rounded-xl p-6 flex flex-col items-center text-center shadow-sm hover:shadow-md transition-shadow">
-                <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center text-navy text-3xl mb-6">
+                <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center text-navy text-3xl mb-6 print:mb-4 print:w-16 print:h-16 print:text-2xl">
                     <i class="fa-solid fa-user-tie"></i>
                 </div>
                 <h3 class="text-lg font-bold text-navy mb-4 border-b-2 border-gold/50 pb-2">
@@ -251,7 +261,7 @@
             </div>
 
             <div class="border border-slate-200 rounded-xl p-6 flex flex-col items-center text-center shadow-sm hover:shadow-md transition-shadow">
-                <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center text-navy text-3xl mb-6">
+                <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center text-navy text-3xl mb-6 print:mb-4 print:w-16 print:h-16 print:text-2xl">
                     <i class="fa-solid fa-globe"></i>
                 </div>
                 <h3 class="text-lg font-bold text-navy mb-4 border-b-2 border-gold/50 pb-2">
@@ -264,7 +274,7 @@
             </div>
 
             <div class="border border-slate-200 rounded-xl p-6 flex flex-col items-center text-center shadow-sm hover:shadow-md transition-shadow">
-                <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center text-navy text-3xl mb-6">
+                <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center text-navy text-3xl mb-6 print:mb-4 print:w-16 print:h-16 print:text-2xl">
                     <i class="fa-solid fa-trophy"></i>
                 </div>
                 <h3 class="text-lg font-bold text-navy mb-4 border-b-2 border-gold/50 pb-2">
@@ -279,15 +289,15 @@
         </div>
     </div>
 
-    <div class="slide-container slide-aspect w-full max-w-5xl bg-navy text-white shadow-2xl rounded-xl overflow-hidden relative p-10 flex flex-col">
+    <div class="slide-container slide-aspect w-full max-w-5xl bg-navy text-white shadow-2xl rounded-xl overflow-hidden relative p-10 flex flex-col print:p-8">
         
-        <div class="text-center mb-6">
+        <div class="text-center mb-6 print:mb-4">
             <h2 class="text-3xl font-bold">
                 貴社のリスク・手間<span class="text-gold">「ゼロ」</span>の提携モデル
             </h2>
         </div>
 
-        <div class="bg-white/5 rounded-xl p-5 mb-6 border border-white/10">
+        <div class="bg-white/5 rounded-xl p-5 mb-6 border border-white/10 print:mb-4 print:p-4">
             <div class="flex items-center justify-between text-center relative">
                 <div class="flex-1">
                     <div class="text-3xl text-slate-400 mb-2"><i class="fa-solid fa-envelope-open-text"></i></div>
@@ -315,7 +325,7 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-3 gap-5 mb-6 flex-1 items-start">
+        <div class="slide-4-content grid grid-cols-3 gap-5 mb-6 flex-1 items-start print:gap-4 print:mb-2">
             <div class="bg-white text-navy p-4 rounded-lg text-center shadow-lg">
                 <span class="bg-navy text-gold text-xs font-bold px-2 py-1 rounded mb-2 inline-block">Benefit 1</span>
                 <h3 class="font-bold text-lg mb-1">紹介手数料</h3>
@@ -338,9 +348,9 @@
             </div>
         </div>
 
-        <div class="mt-auto text-center border-t border-white/20 pt-4">
+        <div class="slide-4-footer mt-auto text-center border-t border-white/20 pt-4">
             <p class="mb-3 text-slate-300 font-medium text-sm">まずは詳細について、オンラインで15分ほどご説明させていただけませんか？</p>
-            <a href="https://www.ark-college.com/" target="_blank" class="inline-flex items-center gap-2 bg-gold hover:bg-goldlight text-navy font-bold py-2 px-8 rounded-full transition-colors shadow-lg hover:shadow-xl text-base">
+            <a href="https://www.ark-college.com/" target="_blank" class="inline-flex items-center gap-2 bg-gold hover:bg-goldlight text-navy font-bold py-2 px-8 rounded-full transition-colors shadow-lg hover:shadow-xl text-base print:py-1">
                 <span>お問い合わせ・詳細はこちら</span>
                 <i class="fa-solid fa-arrow-up-right-from-square"></i>
             </a>
