@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ark College 提携提案資料 (A4最適化版)</title>
+    <title>Ark College 提携提案資料 (A4完全対応版)</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,7 +37,7 @@
            ベース設定
         ========================================= */
         body {
-            background-color: #555; /* 画面表示時の背景（区別しやすく暗く） */
+            background-color: #555;
             margin: 0;
             padding: 20px;
             display: flex;
@@ -50,18 +50,15 @@
            ページコンテナ設定 (A4 横サイズ固定)
         ========================================= */
         .a4-page {
-            /* A4 Landscape Size */
             width: 297mm;
             height: 210mm;
             background-color: white;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 0 15px rgba(0,0,0,0.3); /* 画面表示用の影 */
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
             display: flex;
             flex-direction: column;
-            
-            /* 内部の基本余白 */
-            padding: 15mm 20mm; 
+            padding: 15mm 20mm; /* 基本余白 */
         }
 
         /* =========================================
@@ -69,8 +66,8 @@
         ========================================= */
         @media print {
             @page {
-                size: A4 landscape; /* A4 横 */
-                margin: 0;          /* ブラウザの余白削除 */
+                size: A4 landscape;
+                margin: 0;
             }
 
             body {
@@ -84,9 +81,12 @@
             .a4-page {
                 box-shadow: none;
                 margin: 0;
-                page-break-after: always; /* ページごとに改ページ */
+                page-break-after: always;
                 break-after: page;
                 border: none;
+                /* 印刷時に強制的に高さを確保 */
+                min-height: 210mm;
+                max-height: 210mm;
             }
 
             .a4-page:last-child {
@@ -94,7 +94,6 @@
                 break-after: auto;
             }
 
-            /* 背景色の強制出力 */
             * {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
@@ -104,7 +103,8 @@
 </head>
 <body class="font-sans text-slate-700 antialiased">
 
-    <div class="a4-page p-0"> <div class="absolute top-0 left-0 w-5 h-full bg-gold z-20"></div>
+    <div class="a4-page p-0">
+        <div class="absolute top-0 left-0 w-5 h-full bg-gold z-20"></div>
 
         <div class="flex-1 flex flex-col justify-center px-24 relative z-10">
             <div class="inline-block mb-8">
@@ -148,7 +148,6 @@
     </div>
 
     <div class="a4-page">
-        
         <div class="mb-8 text-center">
             <h2 class="text-3xl font-bold text-navy inline-block border-b-4 border-gold pb-2 px-4">
                 留学生と保護者様が抱える「帰国後の不安」を解消
@@ -215,7 +214,6 @@
     </div>
 
     <div class="a4-page">
-        
         <div class="mb-10 pl-2">
             <p class="text-gold font-bold tracking-[0.3em] uppercase text-sm mb-3">WHY CHOOSE US</p>
             <h2 class="text-4xl font-black text-navy leading-snug">
@@ -271,89 +269,86 @@
         </div>
     </div>
 
-    <div class="a4-page bg-navy text-white relative">
+    <div class="a4-page bg-navy text-white relative" style="padding-top: 12mm; padding-bottom: 12mm;">
         <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(#c5a059 1px, transparent 1px); background-size: 20px 20px;"></div>
 
-        <div class="text-center mb-10 relative z-10">
+        <div class="text-center mb-6 relative z-10">
             <h2 class="text-3xl font-bold">
                 貴社のリスク・手間<span class="text-gold text-4xl mx-2">「ゼロ」</span>の提携モデル
             </h2>
         </div>
 
-        <div class="bg-white/10 rounded-2xl p-8 mb-8 border border-white/20 relative z-10">
+        <div class="bg-white/10 rounded-2xl p-6 mb-6 border border-white/20 relative z-10">
             <div class="flex items-center justify-between text-center relative">
                 <div class="flex-1">
-                    <div class="text-5xl text-slate-400 mb-4"><i class="fa-solid fa-envelope-open-text"></i></div>
-                    <h4 class="font-bold text-gold text-xl mb-1">貴社</h4>
-                    <p class="text-base text-slate-200">生徒様へチラシ/URLをご案内</p>
-                    <p class="text-sm text-slate-400 mt-1">（送付のみでOK）</p>
+                    <div class="text-4xl text-slate-400 mb-3"><i class="fa-solid fa-envelope-open-text"></i></div>
+                    <h4 class="font-bold text-gold text-lg mb-1">貴社</h4>
+                    <p class="text-sm text-slate-200">生徒様へチラシ/URLをご案内</p>
+                    <p class="text-xs text-slate-400 mt-1">（送付のみでOK）</p>
                 </div>
                 
                 <div class="text-slate-500 text-3xl opacity-50"><i class="fa-solid fa-chevron-right"></i></div>
 
                 <div class="flex-1">
-                    <div class="text-5xl text-white mb-4"><i class="fa-solid fa-chalkboard-user"></i></div>
-                    <h4 class="font-bold text-white text-xl mb-1">Ark College</h4>
-                    <p class="text-base text-slate-200">無料相談・入塾・指導</p>
-                    <p class="text-sm text-slate-400 mt-1">（全て弊社が対応）</p>
+                    <div class="text-4xl text-white mb-3"><i class="fa-solid fa-chalkboard-user"></i></div>
+                    <h4 class="font-bold text-white text-lg mb-1">Ark College</h4>
+                    <p class="text-sm text-slate-200">無料相談・入塾・指導</p>
+                    <p class="text-xs text-slate-400 mt-1">（全て弊社が対応）</p>
                 </div>
 
                 <div class="text-slate-500 text-3xl opacity-50"><i class="fa-solid fa-chevron-right"></i></div>
 
                 <div class="flex-1">
-                    <div class="text-5xl text-gold mb-4"><i class="fa-solid fa-hand-holding-dollar"></i></div>
-                    <h4 class="font-bold text-gold text-xl mb-1">成果・報酬</h4>
-                    <p class="text-base text-slate-200">入塾決定で貴社へ報酬をお支払い</p>
+                    <div class="text-4xl text-gold mb-3"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                    <h4 class="font-bold text-gold text-lg mb-1">成果・報酬</h4>
+                    <p class="text-sm text-slate-200">入塾決定で貴社へ報酬をお支払い</p>
                 </div>
             </div>
         </div>
 
-        <div class="grid grid-cols-3 gap-6 mb-8 flex-1 relative z-10">
-            <div class="bg-white text-navy p-6 rounded-xl text-center shadow-xl flex flex-col justify-start">
+        <div class="grid grid-cols-3 gap-6 mb-6 flex-1 relative z-10 items-start">
+            <div class="bg-white text-navy p-5 rounded-xl text-center shadow-xl flex flex-col justify-start h-full">
                 <span class="bg-navy text-gold text-xs font-bold px-3 py-1 rounded-full mb-3 inline-block self-center">Benefit 1</span>
-                <h3 class="font-bold text-xl mb-2">紹介手数料</h3>
-                <div class="my-3 py-2 border-y border-slate-100">
-                    <p class="text-sm font-bold text-slate-500">売上の <span class="text-3xl font-black text-gold">10%</span> をお支払い</p>
+                <h3 class="font-bold text-lg mb-2">紹介手数料</h3>
+                <div class="my-2 py-2 border-y border-slate-100">
+                    <p class="text-sm font-bold text-slate-500">売上の <span class="text-2xl font-black text-gold">10%</span> をお支払い</p>
                 </div>
-                <p class="text-sm text-slate-600 text-left leading-relaxed mt-auto">
-                    生徒様が入塾されるたびに報酬が発生します。<br>
-                    継続的な収益源としてご活用いただけます。
+                <p class="text-xs text-slate-600 text-left leading-relaxed mt-auto">
+                    生徒様が入塾されるたびに報酬が発生します。<br>継続的な収益源としてご活用いただけます。
                 </p>
             </div>
             
-            <div class="bg-white text-navy p-6 rounded-xl text-center shadow-2xl border-4 border-gold transform scale-105 z-20 flex flex-col justify-start relative">
+            <div class="bg-white text-navy p-5 rounded-xl text-center shadow-2xl border-4 border-gold transform scale-105 z-20 flex flex-col justify-start relative h-full">
                 <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gold text-navy font-bold text-xs px-3 py-1 rounded shadow-sm">RECOMMENDED</div>
                 <span class="bg-gold text-navy text-xs font-bold px-3 py-1 rounded-full mb-3 inline-block self-center">Benefit 2</span>
-                <h3 class="font-bold text-xl mb-2">生徒様特典</h3>
-                <div class="my-3 py-2 border-y border-slate-100">
-                    <p class="text-sm font-bold text-slate-500">入塾金 <span class="text-lg text-red-500 line-through">55,000円</span> ➡ <span class="text-3xl font-black text-gold">無料</span></p>
+                <h3 class="font-bold text-lg mb-2">生徒様特典</h3>
+                <div class="my-2 py-2 border-y border-slate-100">
+                    <p class="text-sm font-bold text-slate-500">入塾金 <span class="text-base text-red-500 line-through">55,000円</span> ➡ <span class="text-2xl font-black text-gold">無料</span></p>
                 </div>
-                <p class="text-sm text-slate-600 text-left leading-relaxed mt-auto">
-                    「貴社経由」限定の強力な特典をご用意。<br>
-                    貴社のサービス付加価値としてご案内ください。
+                <p class="text-xs text-slate-600 text-left leading-relaxed mt-auto">
+                    「貴社経由」限定の強力な特典をご用意。<br>貴社のサービス付加価値としてご案内ください。
                 </p>
             </div>
 
-            <div class="bg-white text-navy p-6 rounded-xl text-center shadow-xl flex flex-col justify-start">
+            <div class="bg-white text-navy p-5 rounded-xl text-center shadow-xl flex flex-col justify-start h-full">
                 <span class="bg-navy text-gold text-xs font-bold px-3 py-1 rounded-full mb-3 inline-block self-center">Benefit 3</span>
-                <h3 class="font-bold text-xl mb-2">コンテンツ提供</h3>
-                <div class="my-3 py-2 border-y border-slate-100">
+                <h3 class="font-bold text-lg mb-2">コンテンツ提供</h3>
+                <div class="my-2 py-2 border-y border-slate-100">
                     <p class="text-sm font-bold text-slate-500">貴社イベントへ <span class="text-xl font-black text-gold">無料登壇</span></p>
                 </div>
-                <p class="text-sm text-slate-600 text-left leading-relaxed mt-auto">
-                    留学説明会やセミナー等へ「受験のプロ」として登壇・情報提供が可能です。<br>
-                    イベント集客にも貢献します。
+                <p class="text-xs text-slate-600 text-left leading-relaxed mt-auto">
+                    留学説明会やセミナー等へ「受験のプロ」として登壇可能です。<br>イベント集客にも貢献します。
                 </p>
             </div>
         </div>
 
-        <div class="mt-auto text-center border-t border-white/20 pt-6 relative z-10">
-            <p class="mb-4 text-slate-300 font-medium text-lg">まずは詳細について、オンラインで15分ほどご説明させていただけませんか？</p>
-            <a href="https://www.ark-college.com/" target="_blank" class="inline-flex items-center gap-3 bg-gold hover:bg-goldlight text-navy font-bold py-4 px-12 rounded-full transition-colors shadow-lg hover:shadow-xl text-xl">
+        <div class="mt-auto text-center border-t border-white/20 pt-4 relative z-10">
+            <p class="mb-3 text-slate-300 font-medium text-base">まずは詳細について、オンラインで15分ほどご説明させていただけませんか？</p>
+            <a href="https://www.ark-college.com/" target="_blank" class="inline-flex items-center gap-3 bg-gold hover:bg-goldlight text-navy font-bold py-3 px-10 rounded-full transition-colors shadow-lg hover:shadow-xl text-lg">
                 <span>お問い合わせ・詳細はこちら</span>
                 <i class="fa-solid fa-arrow-up-right-from-square"></i>
             </a>
-            <p class="text-sm text-slate-400 mt-4">Ark College (アークカレッジ) | URL: https://www.ark-college.com/</p>
+            <p class="text-xs text-slate-400 mt-3">Ark College (アークカレッジ) | URL: https://www.ark-college.com/</p>
         </div>
     </div>
 
